@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { ScrollView, Text, FlatList, ListItem, View } from 'react-native';
-import { PARTNERS } from '../shared/partners';
+import React, { Component } from 'react'; 
+import { ScrollView, Text, FlatList} from 'react-native';
+import { ListItem } from 'react-native-elements'; 
+import { PARTNERS }  from '../shared/partners';
 import { Card } from 'react-native-elements';
-
-
-// functional component for assignment 1 task 3
 
 function Mission() {
 
@@ -25,18 +23,20 @@ function Mission() {
     }
 
 class About extends Component {
-    constructor(props){
-        super(props); 
+
+    constructor(props) {
+        super(props);
         this.state = {
-            partners: PARTNERS
+            partners: PARTNERS,
         };
     }
 
     static navigationOptions = {
         title: 'About Us'
-    }
+    };
+
     render() {
-        const renderPartner = ({item})=>{
+        const renderPartner = ({item}) => {
             return (
                 <ListItem
                     title={item.name}
@@ -46,25 +46,20 @@ class About extends Component {
             );
          }
             return (
-                <View>
-                    <ScrollView>
-                        <Mission Mission={Mission} />
-                
-                        <Card
-                            title="Community Partners">
-                            <FlatList
-                            data={this.state.item}
+                <ScrollView>
+                    <Mission Mission={Mission} />
+                    <Card
+                        title="Community Partners">
+
+                        <FlatList
+                            data={this.state.partners}
                             renderItem={renderPartner}
                             keyExtractor={item => item.id.toString()}
                             />
-                        </Card>
-                    </ScrollView>
-                </View>
+                    </Card>
+                </ScrollView>
             );
         }
     }
     
-    
-
-
 export default About; 
