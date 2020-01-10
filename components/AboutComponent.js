@@ -4,6 +4,8 @@ import { ListItem } from 'react-native-elements';
 import { PARTNERS }  from '../shared/partners';
 import { Card } from 'react-native-elements';
 
+// github repo https://github.com/millertime6/reactNativeCampsite
+
 function Mission() {
 
         return (
