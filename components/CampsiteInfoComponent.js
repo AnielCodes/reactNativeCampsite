@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, FlatList, Modal, Button, StyleSheet, Alert, PanResponder } from 'react-native';
+import { Text, View, ScrollView, FlatList, Modal, Button, StyleSheet, Alert, PanResponder, Share } from 'react-native';
 import { Card, Icon, Rating, Input} from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { postFavorite, postComment } from '../redux/ActionCreators'; 
 import * as Animatable from 'react-native-animatable';
+
 
 const mapStateToProps = state => {
     return {
@@ -23,10 +24,10 @@ const mapDispatchToProps = {
 function RenderCampsite(props) {
 
     const {campsite} = props;
-
     const view = React.createRef();
-
     const recognizeDrag = ({dx}) => (dx < -200) ? true : false;
+    const recognizeComment = ({dx}) => (dx < 200) ? true : false;
+
 
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
@@ -58,6 +59,16 @@ function RenderCampsite(props) {
             return true;
         }
     }); 
+
+    const shareCampsite = (title, message, url) => {
+        Share.share({
+            title: title,
+            message: `${title}: ${message} ${url}`,
+            url: url
+        },{
+            dialogTitle: 'Share ' + title
+        });
+    };
 
     if (campsite) {
         return (
@@ -93,6 +104,15 @@ function RenderCampsite(props) {
                         onPress={() => props.onShowModal()}
                         style={styles.cardItem}
                     />
+                    <Icon
+                            name={'share'}
+                            type='font-awesome'
+                            color='#5637DD'
+                            style={styles.cardItem}
+                            raised
+                            reversed
+                            onPress={() => shareCampsite(campsite.name, campsite.description, baseUrl + campsite.image)} 
+                        />
                     </View>
             </Card>
          </Animatable.View>
